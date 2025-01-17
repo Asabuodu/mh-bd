@@ -41,9 +41,9 @@ export class UsersController {
   // Signup route
   @Post('signup')
   async signup(@Body() signupDto: SignupDto): Promise<User> {
-    const { UsernName, email, password } = signupDto;
+    const { UserName, email, password } = signupDto;
     try {
-      return await this.usersService.signup(UsernName, email, password);
+      return await this.usersService.signup(UserName, email, password);
     } catch (error) {
       throw new Error(error.message);
     }
