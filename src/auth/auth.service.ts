@@ -14,7 +14,7 @@ export class AuthService {
 
   // Signup method to register a new user
   async signup(signupDto: SignupDto): Promise<any> {
-    const { UserName, email, password } = signupDto;
+    const { username, email, password } = signupDto;
 
     // Check if user already exists
     const userExists = await this.userModel.findOne({ email }).exec();
@@ -29,7 +29,7 @@ export class AuthService {
     const newUser = new this.userModel({
       // first_name,
       // last_name,
-      UserName,
+      username,
       email,
       password: hashedPassword,
     });
