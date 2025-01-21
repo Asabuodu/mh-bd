@@ -39,7 +39,7 @@ export class AuthService {
     return {
       // first_name: newUser.first_name,
       // last_name: newUser.last_name,
-      username: newUser.UserName, 
+      username: newUser.username, 
       email: newUser.email,
       id: newUser._id,
     };

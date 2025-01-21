@@ -63,7 +63,7 @@ import * as bcrypt from 'bcrypt'; // Add bcrypt for password hashing
 
 export interface  User {
   id: number;
-  name: string;
+  username: string;
   email: string;
   password: string; // Include the password in the User interface
 }
@@ -85,7 +85,7 @@ export class UsersService {
 
     const newUser: User = {
       id: this.users.length + 1,
-      name,
+      username: name,
       email,
       password: hashedPassword, // Save the hashed password
     };
@@ -107,9 +107,9 @@ export class UsersService {
     return user;
   }
 
-  update(id: number, name: string, email: string): User {
+  update(id: number, username: string, email: string): User {
     const user = this.findOne(id);
-    user.name = name;
+    user.username = username;
     user.email = email;
     return user;
   }

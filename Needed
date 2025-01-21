@@ -184,3 +184,25 @@
 
 
 //Set the URL to http://localhost:3000/users/signup.
+
+
+
+
+
+
+
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   if (validateForm()) {
+  //     try {
+  //       const response = await axios.post('signup', formData); // Use the axios instance
+  //       console.log('User signed up successfully:', response.data);
+  //       // Redirect user to login page or dashboard on success
+  //     } catch (error) {
+  //       const errorMessage = (error as any).response?.data?.message || (error as any).message;
+  //       console.error('Error during signup:', errorMessage);
+  //       // Handle errors, e.g., display an error message to the user
+  //     }
+  //   }
+  // };

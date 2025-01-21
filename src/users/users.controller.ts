@@ -49,10 +49,3 @@ export class UsersController {
     }
   }
 }
-
-// export interface User {
-//   id: number;
-//   name: string;
-//   email: string;
-//   password: string; // Include the password in the User interface
-// }
