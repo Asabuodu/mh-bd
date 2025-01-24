@@ -184,13 +184,13 @@ export class AuthService {
 
 
       // Hash the new password
-      const hashedPassword = await bcrypt.hash(password, 10);
+      // const hashedPassword = await bcrypt.hash(password, 10);
 
-      // Update the user's password
-      user.password = hashedPassword;
-      await user.save();
+      // // Update the user's password
+      // user.password = hashedPassword;
+      // await user.save();
 
-      return 'Password reset successful';
+      // return 'Password reset successful';
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired reset token');
     }

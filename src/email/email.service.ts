@@ -36,4 +36,53 @@ export class EmailService {
       throw new Error('Could not send reset password email');
     }
   }
+
+  async sendPasswordResetEmail(email: string, token: string): Promise<void> {
+
+    // Implementation to send the password reset email
+  
+    console.log(`Sending password reset email to ${email} with token ${token}`);
+  
+  }
+  
+  
 }
+
+
+
+
+
+// import { Injectable } from '@nestjs/common';
+// import * as nodemailer from 'nodemailer';
+
+// @Injectable()
+// export class MailService {
+//   private transporter;
+
+//   constructor() {
+//     this.transporter = nodemailer.createTransport({
+//       service: 'gmail', // Use your SMTP provider or service
+//       auth: {
+//         user: 'your-email@gmail.com', // your email address
+//         pass: 'your-email-password',  // your email password or app password
+//       },
+//     });
+//   }
+
+//   async sendPasswordResetEmail(to: string, token: string): Promise<void> {
+//     const mailOptions = {
+//       from: 'your-email@gmail.com',
+//       to,
+//       subject: 'Password Reset Request',
+//       text: `Here is your reset token: ${token}`,
+//     };
+
+//     try {
+//       await this.transporter.sendMail(mailOptions);
+//       console.log('Password reset email sent');
+//     } catch (error) {
+//       console.error('Error sending email:', error);
+//     }
+//   }
+// }
+
