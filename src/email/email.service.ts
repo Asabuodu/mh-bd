@@ -1,88 +1,50 @@
 // src/email/email.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class EmailService {
-  private transporter;
+  private transporter: nodemailer.Transporter;
+  private readonly logger = new Logger(EmailService.name);
 
-  constructor() {
-    // Configure the email transporter with your SMTP details
+  constructor(private readonly configService: ConfigService) {
     this.transporter = nodemailer.createTransport({
-      service: 'gmail', // You can use Gmail or any other service like SendGrid, Mailgun
+      service: this.configService.get<string>('EMAIL_SERVICE', 'gmail'), // Defaults to Gmail if not set
       auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password', // For Gmail, you may need an App Password
+        user: this.configService.get<string>('EMAIL_USER'),
+        pass: this.configService.get<string>('EMAIL_PASS'),
       },
     });
   }
 
-  // Send reset password email
-  async sendResetPasswordEmail(to: string, resetToken: string) {
-    const resetLink = `http://yourfrontendurl.com/reset-password?token=${resetToken}`;
+  getEmailConfig() {
+    return this.configService.get<string>('EMAIL_HOST');
+  }
+
+  async sendPasswordResetEmail (to: string, resetToken: string): Promise<void> {
+    const resetLink = `${this.configService.get<string>('FRONTEND_URL')}/reset-password?token=${resetToken}`;
 
     const mailOptions = {
-      from: 'your-email@gmail.com',
-      to: to,
+      from: this.configService.get<string>('EMAIL_FROM', 'no-reply@example.com'),
+      to,
       subject: 'Password Reset Request',
       text: `Click the link to reset your password: ${resetLink}`,
+      html: `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`, // HTML version
+
+      
     };
 
     try {
       await this.transporter.sendMail(mailOptions);
-      console.log(`Password reset link sent to ${to}`);
+      this.logger.log(`Password reset email sent to ${to}`);
     } catch (error) {
-      console.error('Error sending email:', error);
-      throw new Error('Could not send reset password email');
+      this.logger.error(`Failed to send email to ${to}`, error.stack);
+      throw new Error('Failed to send password reset email');
     }
+    
   }
 
-  async sendPasswordResetEmail(email: string, token: string): Promise<void> {
 
-    // Implementation to send the password reset email
-  
-    console.log(`Sending password reset email to ${email} with token ${token}`);
-  
-  }
-  
-  
 }
-
-
-
-
-
-// import { Injectable } from '@nestjs/common';
-// import * as nodemailer from 'nodemailer';
-
-// @Injectable()
-// export class MailService {
-//   private transporter;
-
-//   constructor() {
-//     this.transporter = nodemailer.createTransport({
-//       service: 'gmail', // Use your SMTP provider or service
-//       auth: {
-//         user: 'your-email@gmail.com', // your email address
-//         pass: 'your-email-password',  // your email password or app password
-//       },
-//     });
-//   }
-
-//   async sendPasswordResetEmail(to: string, token: string): Promise<void> {
-//     const mailOptions = {
-//       from: 'your-email@gmail.com',
-//       to,
-//       subject: 'Password Reset Request',
-//       text: `Here is your reset token: ${token}`,
-//     };
-
-//     try {
-//       await this.transporter.sendMail(mailOptions);
-//       console.log('Password reset email sent');
-//     } catch (error) {
-//       console.error('Error sending email:', error);
-//     }
-//   }
-// }
-
+  
