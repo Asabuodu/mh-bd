@@ -24,6 +24,7 @@ export class AuthController {
 
   // Endpoint to request a password reset (sending a reset token)
   @Post('reset-password')
+  
   async resetPasswordRequest(@Body() resetPasswordDto: ResetPasswordDto) {
     const resetToken = await this.authService.resetPasswordRequest(resetPasswordDto);
     return { resetToken }; // In practice, this would be sent via email

@@ -178,7 +178,7 @@ export class AuthService {
     const resetToken = jwt.sign({ email: user.email, sub: user._id }, 'resetSecretKey', { expiresIn: '1h' });
 
     // Send the reset password email
-    await this.emailService.sendResetPasswordEmail(user.email, resetToken);
+    await this.emailService.sendPasswordResetEmail(user.email, resetToken);
 
     return 'Password reset link has been sent to your email.';
 
